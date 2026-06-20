@@ -1,0 +1,17 @@
+name: Spotify Poll
+
+on:
+  schedule:
+    # Every 5 minutes (GitHub's practical minimum). Runs may be delayed under load.
+    - cron: "*/5 * * * *"
+  workflow_dispatch: {}   # allows manual "Run workflow" from the Actions tab
+
+jobs:
+  poll:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Spotify poll
+        run: |
+          curl -sS -X GET https://logicore.im/api/spotify/cron-poll \
+            -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
+            -w "\nHTTP %{http_code}\n"
