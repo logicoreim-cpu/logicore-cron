@@ -1,0 +1,17 @@
+name: Finance Alerts
+
+on:
+  schedule:
+    # Once daily at 06:00 UTC (~09:00 Asia/Riyadh)
+    - cron: "0 6 * * *"
+  workflow_dispatch: {}
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check budgets and upcoming bills
+        run: |
+          curl -sS -X GET https://logicore.im/api/finance/check-alerts \
+            -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
+            -w "\nHTTP %{http_code}\n"
