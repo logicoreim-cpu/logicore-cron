@@ -1,0 +1,14 @@
+name: Test Backup Email (temporary)
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger test backup email
+        run: |
+          curl -sS -X GET https://logicore.im/api/test-backup-email \
+            -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
+            -w "\nHTTP %{http_code}\n"
