@@ -1,10 +1,11 @@
 name: Spotify Poll
 
 on:
-  schedule:
-    # Every 5 minutes (GitHub's practical minimum). Runs may be delayed under load.
-    - cron: "*/5 * * * *"
-  workflow_dispatch: {}   # allows manual "Run workflow" from the Actions tab
+  # Disabled 2026-06-26 — GitHub's free scheduler was running this with multi-hour
+  # gaps instead of every 5 minutes, missing real listening data. Polling now runs
+  # on Vercel's own Cron (see vercel.json), which is far more reliable. Kept here
+  # as a manual fallback only.
+  workflow_dispatch: {}
 
 jobs:
   poll:
